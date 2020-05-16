@@ -88,7 +88,7 @@ router.post('register', (req, res) => {
           from: 'no-reply@yourwebapplication.com',
           to: user.email,
           subject: 'Account Verification Token',
-          text: `${'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp://'}${
+          text: `${'Hello,\n\n Please verify your account by clicking the link: \nhttp://'}${
             req.headers.host
           }/confirmation/${token.token}.\n`
         };
@@ -98,6 +98,7 @@ router.post('register', (req, res) => {
             return res.status(500).send({ msg: err.message });
           }
           res.status(200).send(`A verification email has been sent to ${user.email}.`);
+          return res.status(200);
         });
         return res.status(200);
       });
