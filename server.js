@@ -34,7 +34,6 @@ app.use('/users', usersRoute);
 app.use('/communities', communitiesRoute);
 app.use('/auth', authRoute);
 
-
 // PORT
 const PORT = process.env.SERVER_PORT || 3000;
 

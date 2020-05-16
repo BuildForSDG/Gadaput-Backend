@@ -13,8 +13,9 @@ const Token = require('../models/token');
 
 let hashedPassword;
 
-mongoose.connect('mongodb+srv://gadaput:gadaput231%23%23@cluster0-5kzif.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true });
-
+mongoose.connect('mongodb+srv://gadaput:gadaput231%23%23@cluster0-5kzif.mongodb.net/test?retryWrites=true&w=majority', {
+  useNewUrlParser: true
+});
 
 const db = mongoose.connection;
 // eslint-disable-next-line no-console
@@ -87,13 +88,9 @@ router.post('register', (req, res) => {
           from: 'no-reply@yourwebapplication.com',
           to: user.email,
           subject: 'Account Verification Token',
-          text:
-            `${'Hello,\n\n' +
-            'Please verify your account by clicking the link: \nhttp://'}${
-              req.headers.host
-            }/confirmation/${
-              token.token
-            }.\n`
+          text: `${'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp://'}${
+            req.headers.host
+          }/confirmation/${token.token}.\n`
         };
         // eslint-disable-next-line no-shadow
         transporter.sendMail(mailOptions, (err) => {
