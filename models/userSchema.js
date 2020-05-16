@@ -5,7 +5,11 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: 'Required' },
   username: { type: String, required: 'Required' },
   email: { type: String, required: 'Required' },
-  password: { type: String, required: 'Required' }
+  password: { type: String, required: 'Required' },
+  isVerified: { type: Boolean, default: false },
+  passwordResetToken: String,
+  passwordResetExpires: Date,
+  date: { type: Date, default: Date.now }
 });
 
 mongoose.model('users', userSchema);
