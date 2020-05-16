@@ -99,8 +99,12 @@ router.post('register', (req, res) => {
           }
           res.status(200).send(`A verification email has been sent to ${user.email}.`);
         });
+        return res.status(200);
       });
+      return res.status(200);
     });
+    return res.status(200);
   });
+  return res.status(200);
 });
 module.exports = router;
