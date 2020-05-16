@@ -28,9 +28,11 @@ app.get('/', (req, res) => {
 // Routes
 const usersRoute = require('./routes/users');
 const communitiesRoute = require('./routes/communities');
+const authRoute = require('./routes/auth');
 
 app.use('/users', usersRoute);
 app.use('/communities', communitiesRoute);
+app.use('/auth', authRoute);
 
 
 // PORT
