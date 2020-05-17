@@ -14,8 +14,6 @@ let router = express.Router();
 const User = require('../models/userSchema');
 const Token = require('../models/token');
 
-let hashedPassword;
-
 mongoose.connect('mongodb+srv://gadaput:gadaput231%23%23@cluster0-5kzif.mongodb.net/test?retryWrites=true&w=majority', {
   useNewUrlParser: true
 });
@@ -33,17 +31,17 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-  // check('username', 'UserName cannot be blank').notEmpty();
-  // check('email', 'Email is not valid').isEmail();
-  // check('email', 'Email cannot be blank').notEmpty();
-  // check('password', 'Password must be at least 4 characters long').isLength({ min: 4 });
-  // check('email').normalizeEmail({ remove_dots: false });
+  check('username', 'UserName cannot be blank').notEmpty();
+  check('email', 'Email is not valid').isEmail();
+  check('email', 'Email cannot be blank').notEmpty();
+  check('password', 'Password must be at least 4 characters long').isLength({ min: 4 });
+  check('email').normalizeEmail({ remove_dots: false });
 
-  // // Check for validation errors
-  // const errors = validationResult(req);
-  // if (errors) {
-  //   return res.status(400).send(errors);
-  // }
+  // Check for validation errors
+  const errors = validationResult(req);
+  if (errors) {
+    return res.status(400).send(errors);
+  }
 
   // Make sure this account doesn't already exist
   User.findOne({ email: req.body.email }, (err, user) => {
@@ -59,14 +57,19 @@ router.post('/register', (req, res) => {
     bcrypt.hash(req.body.password, null, null, (err, hash) => {
       if (err) {
         res.send(err);
-      } else {
-        hashedPassword = hash;
       }
+      return hash;
     });
     // req.body.password = hashedPassword;
     // Create and save the user
     // eslint-disable-next-line no-param-reassign
-    user = new User({ email: req.body.email, username: req.body.username, password: req.body.password, firstName: req.body.firstName, lastName: req.body.lastName });
+    user = new User({
+      email: req.body.email,
+      username: req.body.username,
+      password: req.body.password,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName
+    });
     // eslint-disable-next-line no-shadow
     user.save((err) => {
       if (err) {
