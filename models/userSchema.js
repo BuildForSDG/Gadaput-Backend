@@ -1,10 +1,19 @@
-const mongoose = require('mongoose');
+// eslint-disable-next-line prefer-const
+let mongoose = require('mongoose');
+
 
 const userSchema = new mongoose.Schema({
-  firstName: { type: String, required: 'Required' },
-  lastName: { type: String, required: 'Required' },
-  username: { type: String, required: 'Required' },
-  password: { type: String, required: 'Required' }
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  username: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  isVerified: { type: Boolean, default: false },
+  passwordResetToken: String,
+  passwordResetExpires: Date,
+  date: { type: Date, default: Date.now }
 });
 
-mongoose.model('users', userSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
