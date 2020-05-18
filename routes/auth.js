@@ -16,7 +16,7 @@ const Token = require('../models/token');
 
 let hashedPass;
 
-mongoose.connect('mongodb+srv://gadaput:gadaput231%23%23@cluster0-5kzif.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(process.env.URL, {
   useNewUrlParser: true
 });
 
