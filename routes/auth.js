@@ -118,9 +118,7 @@ router.post(
   }
 );
 
-router.get('/verify/:token', (req, res) => {
-  return res.status(200).send({ token: req.params.token });
-});
+router.get('/verify/:token', (req, res) => res.status(200).send({ token: req.params.token }));
 
 router.post('/verify', (req, res) => {
   const { email, token } = req.body;
@@ -132,6 +130,7 @@ router.post('/verify', (req, res) => {
     res.send({ message: "Token doesn't exist or may have expired" });
   } else {
     // Find a matching token
+    // eslint-disable-next-line no-shadow
     Token.findOne({ token: req.body.token }, (err, token) => {
       if (!token) {
         res.status(400).send({
@@ -139,8 +138,9 @@ router.post('/verify', (req, res) => {
         });
       } else {
         // If we found a token, find a matching user
-        User.findOne({ _id: token._userId, email: req.body.email }, (err, user) => {
-          if (err) {
+        // eslint-disable-next-line no-underscore-dangle
+        User.findOne({ _id: token._userId, email: req.body.email }, (errr, user) => {
+          if (errr) {
             res.status(500).send({ msg: err.message });
           } else {
             if (!user) {
@@ -151,13 +151,14 @@ router.post('/verify', (req, res) => {
             }
             // Verify and save the user
             user.isVerified = true;
-            user.save((err) => {
-              if (err) {
+            user.save((errrr) => {
+              if (errrr) {
                 res.status(500).send({ msg: err.message });
               }
               return res.status(200).send('The account has been verified. Please log in.');
             });
           }
+          return res.status(200);
         });
       }
     });
