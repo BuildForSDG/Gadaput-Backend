@@ -13,7 +13,7 @@ const dbconnection = require('./models');
 const app = express();
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(logger('dev'));
 // parse application/json
@@ -39,6 +39,7 @@ app.get('/', (req, res) => {
 // Routes
 const usersRoute = require('./routes/users');
 const communitiesRoute = require('./routes/communities');
+const authRoute = require('./routes/auth');
 
 app.use('/users', usersRoute);
 app.use('/communities', communitiesRoute);
@@ -58,6 +59,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.send('error');
 });
+app.use('/auth', authRoute);
 
 // PORT
 const PORT = process.env.SERVER_PORT || 3000;
