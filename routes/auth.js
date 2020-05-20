@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 // eslint-disable-next-line prefer-const
