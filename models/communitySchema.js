@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const communitiesSchema = new mongoose.Schema({
+const communitySchema = new mongoose.Schema({
   name: { type: String, required: 'Required' },
   population: { type: Number, required: 'Required' },
   location: { type: String, required: 'Required' },
-  verified: { type: Boolean, required: 'Required' }
+  verified: { type: Boolean, default: false }
 });
 
-mongoose.model('communities', communitiesSchema);
+module.exports = mongoose.model('Community', communitySchema);
