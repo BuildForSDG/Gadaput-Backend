@@ -17,7 +17,7 @@
     "test:watch": "jest --watch",
     "test:cover": "jest --coverage",
     "lint": "eslint \"src/**/*.js\"",
-    "start": "parcel ./src/index.html"
+    "start": "node server.js"
   },
   "author": {
     "name": "Build For SDG",
@@ -37,7 +37,6 @@
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
-
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -47,7 +46,6 @@
     "mongoose": "^5.9.14",
     "morgan": "^1.10.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.14",
     "nodemailer": "^6.4.6"
   },
   "devDependencies": {
