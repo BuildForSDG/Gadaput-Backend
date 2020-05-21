@@ -3,6 +3,8 @@ const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 // eslint-disable-next-line prefer-const
 let mongoose = require('mongoose');
+// eslint-disable-next-line import/no-unresolved
+
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
@@ -19,7 +21,8 @@ const Token = require('../models/token');
 let hashedPass;
 
 mongoose.connect(process.env.URL, {
-  useNewUrlParser: true
+  useNewUrlParser: true, useUnifiedTopology: true
+
 });
 
 const db = mongoose.connection;
@@ -100,6 +103,7 @@ router.post(
                       subject: 'Account Verification Token',
                       text: `${'Hello,\n\n Please verify your account by clicking the link: \nhttp://'}${
                         req.headers.host
+                      }/auth/confirmation/${token.token}.\n`
                       }/auth/verify/${token.token}\n`
                     };
                     // eslint-disable-next-line no-shadow
@@ -119,6 +123,7 @@ router.post(
     }
   }
 );
+
 
 router.get('/verify/:token', (req, res) => res.status(200).send({ token: req.params.token }));
 

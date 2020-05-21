@@ -1,25 +1,66 @@
 /* eslint-disable no-console */
 const express = require('express');
-const mongoose = require('mongoose');
 
 const router = express.Router();
 
-const communitiesModel = mongoose.model('communities');
+// importing community schema
+const Community = require('../models/communitySchema');
 
-router.get('/', (req, res) => {
-  communitiesModel
-    .find()
-    .then((community) => {
+// *Communities Route.
+
+router.post('/community/add', (req, res) => {
+  // new instance of community to recieve request from client
+  const community = new Community({
+    name: req.body.name,
+    population: req.body.population,
+    location: req.body.location
+  });
+  // save the comunity details to databse
+  community
+    .save()
+    .then(() => {
       console.log(community);
-      res.send({ community });
+      res.status(200).send({ community });
+      // res.send({ community });
+    })
+    // throw error if community detais is not saved
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || 'Something wrong while adding Community.'
+      });
+    });
+});
+
+// fetch communities upon request
+router.get('/community', (req, res) => {
+  Community
+    .find()
+    .then((communities) => {
+      console.log(communities);
+      res.status(200).send({ communities });
+      // res.send({ community });
     })
     .catch((err) => {
       res.status(500).send({
         message: err.message || 'Something wrong while retrieving Communities.'
       });
     });
-
-  res.send({ massage: 'Welcome to Gadaput Communities' });
+});
+// Fetch a single community upon request
+router.get('/community/:id', (req, res) => {
+  Community.findOne({
+    _id: req.params.id
+  }).then(
+    (community) => {
+      res.status(200).json(community);
+    }
+  ).catch(
+    (error) => {
+      res.status(404).json({
+        error
+      });
+    }
+  );
 });
 
 module.exports = router;
