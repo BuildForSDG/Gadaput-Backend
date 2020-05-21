@@ -33,8 +33,7 @@ router.post('/community/add', (req, res) => {
 
 // fetch communities upon request
 router.get('/community', (req, res) => {
-  Community
-    .find()
+  Community.find()
     .then((communities) => {
       console.log(communities);
       res.status(200).send({ communities });
@@ -50,17 +49,15 @@ router.get('/community', (req, res) => {
 router.get('/community/:id', (req, res) => {
   Community.findOne({
     _id: req.params.id
-  }).then(
-    (community) => {
+  })
+    .then((community) => {
       res.status(200).json(community);
-    }
-  ).catch(
-    (error) => {
+    })
+    .catch((error) => {
       res.status(404).json({
         error
       });
-    }
-  );
+    });
 });
 
 module.exports = router;
