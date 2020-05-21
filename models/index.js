@@ -16,4 +16,4 @@ mongoose
   });
 
 const users = require('./userSchema');
-const communities = require('./communitiesSchema');
+const community = require('./communitySchema');

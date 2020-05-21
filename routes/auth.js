@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 // eslint-disable-next-line prefer-const
 let mongoose = require('mongoose');
+// eslint-disable-next-line import/no-unresolved
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const { check, validationResult } = require('express-validator');
@@ -17,7 +18,7 @@ const Token = require('../models/token');
 let hashedPass;
 
 mongoose.connect(process.env.URL, {
-  useNewUrlParser: true
+  useNewUrlParser: true, useUnifiedTopology: true
 });
 
 const db = mongoose.connection;

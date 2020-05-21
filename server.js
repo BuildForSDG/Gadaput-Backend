@@ -36,13 +36,19 @@ app.get('/', (req, res) => {
   res.send({ message: 'Welcome to GadaPut' });
 });
 
+// const indexRoute = require('./routes/dashboard');
+
+// app.use('/', indexRoute);
+// app.use('/dashboard', indexRoute);
+
 // Routes
 const usersRoute = require('./routes/users');
 const communitiesRoute = require('./routes/communities');
 const authRoute = require('./routes/auth');
 
 app.use('/users', usersRoute);
-app.use('/communities', communitiesRoute);
+app.use('/', communitiesRoute);
+app.use('/auth', authRoute);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -57,9 +63,9 @@ app.use((err, req, res, next) => {
 
   // render the error page
   res.status(err.status || 500);
-  res.send('error');
+  res.send(`error ${err.status}`);
 });
-app.use('/auth', authRoute);
+
 
 // PORT
 const PORT = process.env.SERVER_PORT || 3000;
