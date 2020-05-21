@@ -66,8 +66,6 @@ app.use((err, req, res, next) => {
   res.send(`error ${err.status}`);
 });
 
-
-
 // PORT
 const PORT = process.env.SERVER_PORT || 3000;
 
