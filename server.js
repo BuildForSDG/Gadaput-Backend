@@ -46,7 +46,7 @@ const usersRoute = require('./routes/users');
 const communitiesRoute = require('./routes/communities');
 const authRoute = require('./routes/auth');
 
-app.use('/users', usersRoute);
+app.use('/user', usersRoute);
 app.use('/', communitiesRoute);
 app.use('/auth', authRoute);
 
@@ -65,7 +65,6 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.send(`error ${err.status}`);
 });
-
 
 
 // PORT

@@ -187,7 +187,7 @@ router.post('/login', (req, res) => {
           }
           if (isMatch) {
             jwt.sign({ email }, 'secretkey', { expiresIn: '3h' }, (erry, token) => {
-              res.cookie('token', token, { maxAge: 180 * 60 * 1000 });
+              res.setHeader('authorization', token, { maxAge: 180 * 60 * 1000 });
               res.send({ message: 'Logged in successfully' });
               console.log('logged in successfully', token);
             });
