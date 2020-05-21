@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 // eslint-disable-next-line prefer-const
 let mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 
 require('dotenv').config();
@@ -166,5 +168,38 @@ router.post('/verify', (req, res) => {
 });
 
 router.get('/login', (req, res) => res.status(200).send('The login page'));
+
+router.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  User.findOne({ email }).then((user) => {
+    if (user) {
+      if (user.isVerified) {
+        // Load hash from your password DB.
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          // res == true
+          if (!isMatch) {
+            res.send({ message: 'Password is incorrect' });
+            console.log('incorrect password');
+          }
+          if (isMatch) {
+            jwt.sign({ email }, 'secretkey', { expiresIn: '3h' }, (erry, token) => {
+              res.cookie('token', token, { maxAge: 180 * 60 * 1000 });
+              res.send({ message: 'Logged in successfully' });
+              console.log('logged in successfully', token);
+            });
+          }
+        });
+      } else {
+        console.log('user is not verified');
+        return res.status(200).res.redirect('/verify');
+      }
+    } else {
+      console.log('user does not exist');
+      return res.status(200).res.redirect('/register');
+    }
+    return res.status(200);
+  });
+});
 
 module.exports = router;
