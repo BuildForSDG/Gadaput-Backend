@@ -103,7 +103,6 @@ router.post(
                       subject: 'Account Verification Token',
                       text: `${'Hello,\n\n Please verify your account by clicking the link: \nhttp://'}${
                         req.headers.host
-                      }/auth/confirmation/${token.token}.\n`
                       }/auth/verify/${token.token}\n`
                     };
                     // eslint-disable-next-line no-shadow
