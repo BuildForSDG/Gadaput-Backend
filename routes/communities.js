@@ -9,12 +9,13 @@ const Community = require('../models/communitySchema');
 
 // Communities Route.
 
-// fetch Communities upon request
+// fetch communities upon request
 router.get('/community', (req, res) => {
   Community.find()
     .then((communities) => {
       console.log(communities);
       res.status(200).send({ communities });
+      // res.send({ community });
     })
     .catch((err) => {
       res.status(500).send({
@@ -22,10 +23,10 @@ router.get('/community', (req, res) => {
       });
     });
 });
-// Fetch a single Community upon request
+// Fetch a single community upon request
 router.get('/community/:id', (req, res) => {
   Community.findOne({
-    _id: mongoose.Types.ObjectId(req.params.id)
+    _id: req.params.id
   })
     .then((community) => {
       res.status(200).json(community);
@@ -36,6 +37,7 @@ router.get('/community/:id', (req, res) => {
       });
     });
 });
+
 
 
 // Updating a Community

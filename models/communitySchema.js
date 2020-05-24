@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const communitySchema = new mongoose.Schema({
-  name: { type: String, required: 'Required' },
-  population: { type: Number, required: 'Required' },
-  location: { type: String, required: 'Required' },
+  name: { type: String, required: true },
+  population: { type: Number, required: true },
+  location: { type: String, required: true },
   verified: { type: Boolean, default: false }
 });
 

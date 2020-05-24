@@ -21,8 +21,8 @@ const Token = require('../models/token');
 let hashedPass;
 
 mongoose.connect(process.env.URL, {
-  useNewUrlParser: true, useUnifiedTopology: true
-
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
 const db = mongoose.connection;
@@ -123,7 +123,6 @@ router.post(
   }
 );
 
-
 router.get('/verify/:token', (req, res) => res.status(200).send({ token: req.params.token }));
 
 router.post('/verify', (req, res) => {
@@ -188,7 +187,7 @@ router.post('/login', (req, res) => {
           }
           if (isMatch) {
             jwt.sign({ email }, 'secretkey', { expiresIn: '3h' }, (erry, token) => {
-              res.cookie('token', token, { maxAge: 180 * 60 * 1000 });
+              res.setHeader('authorization', token, { maxAge: 180 * 60 * 1000 });
               res.send({ message: 'Logged in successfully' });
               console.log('logged in successfully', token);
             });
